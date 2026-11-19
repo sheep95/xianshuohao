@@ -35,3 +35,6 @@ backend/data/
 Thumbs.db
 .idea/
 .vscode/
+
+# Supabase CLI link cache
+supabase/.temp/

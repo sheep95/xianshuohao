@@ -1,0 +1,14 @@
+# Backend-only Vercel project upload scope.
+frontend/
+docs/
+.cache/
+.ruff_cache/
+supabase/
+design.md
+render.yaml
+backend/.env
+backend/data/
+backend/tests/
+backend/.venv/
+**/__pycache__/
+**/*.pyc

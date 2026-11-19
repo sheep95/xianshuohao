@@ -19,13 +19,13 @@ def build_engine(database_url: str) -> Engine:
         url = url.set(drivername="postgresql+psycopg")
     if url.get_backend_name() == "sqlite" and url.database not in {None, "", ":memory:"}:
         Path(url.database).resolve().parent.mkdir(parents=True, exist_ok=True)
-    engine = create_engine(
-        url,
-        pool_pre_ping=True,
-        connect_args={"check_same_thread": False, "timeout": 10}
-        if url.get_backend_name() == "sqlite"
-        else {},
-    )
+    connect_args: dict[str, object] = {}
+    if url.get_backend_name() == "sqlite":
+        connect_args = {"check_same_thread": False, "timeout": 10}
+    elif url.get_backend_name() == "postgresql":
+        # Transaction-mode poolers (Supavisor/PgBouncer) cannot hold prepared statements.
+        connect_args = {"prepare_threshold": None}
+    engine = create_engine(url, pool_pre_ping=True, connect_args=connect_args)
     if engine.dialect.name == "sqlite":
 
         @event.listens_for(engine, "connect")
