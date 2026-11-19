@@ -1,0 +1,722 @@
+{
+  "schema_version": 1,
+  "spaces": [
+    {
+      "key": "shared_home",
+      "label": "宿舍 / 合租",
+      "duration_key": "week",
+      "duration_label": "一周",
+      "default_days": 7,
+      "description": "拿到一张关于声音、灯光和共享空间的入住小宪法。",
+      "default_selection": [
+        {
+          "friction_key": "night_sound",
+          "level_id": "quiet_2300"
+        },
+        {
+          "friction_key": "lights",
+          "level_id": "desk_lamp_2300"
+        },
+        {
+          "friction_key": "borrowing",
+          "level_id": "ask_before_borrowing"
+        },
+        {
+          "friction_key": "trash",
+          "level_id": "meal_boxes_30m"
+        },
+        {
+          "friction_key": "air_conditioning",
+          "level_id": "announce_temperature"
+        }
+      ]
+    },
+    {
+      "key": "short_stay",
+      "label": "短租 / 民宿",
+      "duration_key": "three_days",
+      "duration_label": "三天",
+      "default_days": 3,
+      "description": "拿到一张关于浴室、厨房和离场整理的同行小宪法。",
+      "default_selection": [
+        {
+          "friction_key": "bathroom",
+          "level_id": "bathroom_15m"
+        },
+        {
+          "friction_key": "food",
+          "level_id": "label_food_use"
+        },
+        {
+          "friction_key": "cleaning",
+          "level_id": "wipe_table_5m"
+        },
+        {
+          "friction_key": "night_sound",
+          "level_id": "quiet_2300"
+        },
+        {
+          "friction_key": "departure",
+          "level_id": "close_door_and_report"
+        }
+      ]
+    },
+    {
+      "key": "club_room",
+      "label": "社团活动室",
+      "duration_key": "semester",
+      "duration_label": "一学期",
+      "default_days": 120,
+      "description": "拿到一张关于设备、桌面和活动复位的开门小宪法。",
+      "default_selection": [
+        {
+          "friction_key": "time_slots",
+          "level_id": "register_slot"
+        },
+        {
+          "friction_key": "shared_devices",
+          "level_id": "projector_off"
+        },
+        {
+          "friction_key": "shared_desks",
+          "level_id": "clear_desk_5m"
+        },
+        {
+          "friction_key": "reset_room",
+          "level_id": "return_materials_10m"
+        },
+        {
+          "friction_key": "departure",
+          "level_id": "lights_and_ac_off"
+        }
+      ]
+    }
+  ],
+  "frictions": [
+    {
+      "key": "night_sound",
+      "title": "深夜声音",
+      "real_friction": "播放声音的结束时间没有说清，休息的人只能临时开口提醒。",
+      "space_types": [
+        "shared_home",
+        "short_stay",
+        "club_room"
+      ],
+      "levels": [
+        {
+          "id": "headphones_2200",
+          "label": "22:00 后戴耳机或静音",
+          "action": "22:00 后播放音频或视频须戴耳机；没有耳机时静音。",
+          "execution_hint": "先静音再找耳机，不用汇报刷到了什么。",
+          "humor_variants": [
+            "22:00 后，精彩内容仅限本人收听。",
+            "深夜刷视频，不默认全屋订阅。"
+          ]
+        },
+        {
+          "id": "quiet_2300",
+          "label": "23:00 后不外放",
+          "action": "游戏照打，视频照刷。23:00 后停止外放音频和视频；继续听声音就戴耳机，没有耳机就静音。",
+          "execution_hint": "被提醒时先按静音，回一个 👋 就行，不用汇报这局还有多久。",
+          "humor_variants": [
+            "23:00 后，不附赠全寝直播。",
+            "深夜上分，不含全寝解说服务。"
+          ]
+        },
+        {
+          "id": "pause_on_reminder_30s",
+          "label": "被提醒后 30 秒内暂停外放",
+          "action": "收到声音提醒后，30 秒内暂停外放音频和视频。",
+          "execution_hint": "先暂停，再回一个 👋；不用论证刚才到底响不响。",
+          "humor_variants": [
+            "提醒一次，不开启音量辩论赛。",
+            "先暂停，精彩片段可以稍后补。"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "alarms",
+      "title": "闹钟",
+      "real_friction": "叫醒一个人的闹钟可能连续叫醒整个房间。",
+      "space_types": [
+        "shared_home",
+        "short_stay"
+      ],
+      "levels": [
+        {
+          "id": "vibration_before_0700",
+          "label": "07:00 前闹钟设为振动",
+          "action": "07:00 前使用的闹钟设为振动模式，不播放铃声。",
+          "execution_hint": "设备不能振动就取消这次有声闹钟，不用提交早起理由。",
+          "humor_variants": [
+            "早起可以，别默认全员报名。",
+            "07:00 前，不开全屋叫醒服务。"
+          ]
+        },
+        {
+          "id": "alarm_off_30s",
+          "label": "铃响后 30 秒内关闭声音",
+          "action": "闹钟响起后，30 秒内关闭铃声。",
+          "execution_hint": "先关铃，后续提醒改振动；想再躺一会儿不用解释。",
+          "humor_variants": [
+            "再睡五分钟，不附赠铃声循环。",
+            "赖床自由，不含无限次试听。"
+          ]
+        },
+        {
+          "id": "two_alarms_per_morning",
+          "label": "06:00—12:00 同一设备最多响两次",
+          "action": "每天 06:00—12:00，同一设备的有声闹钟最多响 2 次。",
+          "execution_hint": "第 3 次起改振动，不需要说明前两次为什么没起。",
+          "humor_variants": [
+            "起床铃声，不搞连续剧。",
+            "每天两次，不加返场安可。"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "lights",
+      "title": "灯光",
+      "real_friction": "继续活动需要照明，准备休息的人却还在顶灯下面。",
+      "space_types": [
+        "shared_home",
+        "short_stay",
+        "club_room"
+      ],
+      "levels": [
+        {
+          "id": "desk_lamp_2300",
+          "label": "23:00 后关闭顶灯，使用台灯",
+          "action": "23:00 后关闭顶灯，需要照明时改用台灯。",
+          "execution_hint": "没台灯就先暂停，或移到室外亮灯区，不用交代赶什么进度。",
+          "humor_variants": [
+            "熬夜可以，别把全屋调成白天。",
+            "23:00 后，学习不附赠全寝照明。"
+          ]
+        },
+        {
+          "id": "lamp_toward_desk",
+          "label": "台灯灯头朝桌面，不朝床铺",
+          "action": "使用台灯时，灯头朝向桌面，不朝向床铺。",
+          "execution_hint": "先关灯再挪位置；调好朝向再打开，不用现场解释光路。",
+          "humor_variants": [
+            "看书开灯，不给床铺打追光。",
+            "看书开灯，不开全寝发布会。"
+          ]
+        },
+        {
+          "id": "lights_off_when_empty",
+          "label": "最后离开时关闭照明",
+          "action": "最后一个人离开空间时，关闭室内照明。",
+          "execution_hint": "够不到开关就请门口同伴代关，确认熄灯再走。",
+          "humor_variants": [
+            "人都走了，就不保留营业氛围。",
+            "空房间，不需要假装还有加班。"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "visitors",
+      "title": "访客",
+      "real_friction": "临时来访没有预告，其他人不知道公共空间会被使用多久。",
+      "space_types": [
+        "shared_home",
+        "short_stay",
+        "club_room"
+      ],
+      "levels": [
+        {
+          "id": "announce_visit_end",
+          "label": "访客进门前发预计离开时间",
+          "action": "访客进门前，在群里发送预计离开时间。",
+          "execution_hint": "时间没定就先在门外见面，定好后发一个时刻即可。",
+          "humor_variants": [
+            "来串门可以，结束时间别留悬念。",
+            "访客预告，请带一个散场时间。"
+          ]
+        },
+        {
+          "id": "no_visitors_after_2200",
+          "label": "22:00 后不接待室内访客",
+          "action": "22:00 后不接待室内访客，仍需交流时移到室外。",
+          "execution_hint": "到点一起移到室外，不用搬出任何室友当理由。",
+          "humor_variants": [
+            "22:00 后，续聊请换场地。",
+            "聊天还没尽兴，不等于房间续费。"
+          ]
+        },
+        {
+          "id": "restore_visitor_seats_10m",
+          "label": "访客离开后 10 分钟内复位座椅",
+          "action": "访客离开后 10 分钟内，将其使用过的座椅放回原位。",
+          "execution_hint": "先放下手里的东西，再把用过的座椅归位，不用发整理证明。",
+          "humor_variants": [
+            "客人走了，座位别留下番外篇。",
+            "聚会散场，不附赠家具改造。"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "borrowing",
+      "title": "物品借用",
+      "real_friction": "物品暂时闲置不等于可以直接拿走，借还时间也容易没有下文。",
+      "space_types": [
+        "shared_home",
+        "short_stay",
+        "club_room"
+      ],
+      "levels": [
+        {
+          "id": "ask_before_borrowing",
+          "label": "借他人物品前收到“可以”",
+          "action": "借用他人物品前，先发消息问一句，收到“可以”后再拿。“就用一下”不算已经问过，没回复也不算默认同意。",
+          "execution_hint": "没收到回复就先不拿，不必追问原因，也不用解释为什么突然不借了。",
+          "humor_variants": [
+            "放在桌上，不代表加入共享套餐。",
+            "借用不支持先拿后补申请。"
+          ]
+        },
+        {
+          "id": "announce_return_time",
+          "label": "借用时写明物品和归还时间",
+          "action": "借用物品时，在群里写明物品名称和归还时间。",
+          "execution_hint": "归还时间没定就先不借，不用承诺一个自己也不信的时间。",
+          "humor_variants": [
+            "借用不是永久会员体验。",
+            "借的时候痛快，还的时间也说痛快。"
+          ]
+        },
+        {
+          "id": "return_after_use_5m",
+          "label": "使用结束后 5 分钟内归位或当面交还",
+          "action": "借用物品使用结束后 5 分钟内，放回取用位置或当面交还。",
+          "execution_hint": "忘了原位就当面交还，不用补一篇物品旅行报告。",
+          "humor_variants": [
+            "用完就还，不自动续成长期持有。",
+            "借来用一下，不是借来换户主。"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "trash",
+      "title": "垃圾",
+      "real_friction": "餐盒和满桶垃圾容易停在“下一位会处理”的默认状态。",
+      "space_types": [
+        "shared_home",
+        "short_stay",
+        "club_room"
+      ],
+      "levels": [
+        {
+          "id": "meal_boxes_30m",
+          "label": "吃完后 30 分钟内封袋丢餐盒",
+          "action": "吃完外卖后 30 分钟内，将餐盒封袋放入垃圾桶。",
+          "execution_hint": "腾不出手先盖好餐盒，仍在 30 分钟内封袋入桶。",
+          "humor_variants": [
+            "饭可以吃完，餐盒别留作战绩。",
+            "外卖已结束，桌面不办回顾展。"
+          ]
+        },
+        {
+          "id": "replace_full_bag",
+          "label": "垃圾到桶口时更换垃圾袋",
+          "action": "垃圾达到桶口时，扎紧旧袋并带到垃圾收集点；有新袋就换上，无新袋则在群里报缺袋。",
+          "execution_hint": "没新袋就先扎紧旧袋带走，在群里发“需要垃圾袋”。",
+          "humor_variants": [
+            "垃圾到桶口，就别挑战叠叠乐。",
+            "桶满不是压缩算法测试题。"
+          ]
+        },
+        {
+          "id": "pack_before_leaving",
+          "label": "离开前收走自己产生的包装物",
+          "action": "离开公共空间前，将本次产生的包装物放入垃圾桶。",
+          "execution_hint": "桶满就把包装封袋带到垃圾收集点，不用找谁来接班。",
+          "humor_variants": [
+            "人离场，包装不留彩蛋。",
+            "来过的证据，不用靠零食袋。"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "cleaning",
+      "title": "使用后清洁",
+      "real_friction": "公共区域用完后的水渍和残渣，容易成为下一位的额外任务。",
+      "space_types": [
+        "shared_home",
+        "short_stay",
+        "club_room"
+      ],
+      "levels": [
+        {
+          "id": "wipe_table_5m",
+          "label": "用完桌面后 5 分钟内擦掉残渣水渍",
+          "action": "用完公共桌面后 5 分钟内，擦掉本次留下的可见残渣和水渍。",
+          "execution_hint": "没抹布就用纸巾擦，纸巾随后入桶，不用补全清洁装备。",
+          "humor_variants": [
+            "桌面不保留上一餐的存档。",
+            "吃过什么，不留给下一位破案。"
+          ]
+        },
+        {
+          "id": "clear_sink_after_use",
+          "label": "用完水槽后清走可见固体残渣",
+          "action": "用完水槽后、离开水槽前，将可见固体残渣放入垃圾桶。",
+          "execution_hint": "用纸巾包起残渣丢进垃圾桶，不需要徒手挑战。",
+          "humor_variants": [
+            "水槽不是厨余直达通道。",
+            "冲水不能把饭粒变成不存在。"
+          ]
+        },
+        {
+          "id": "wipe_spill_2m",
+          "label": "打翻饮料后 2 分钟内擦掉积液",
+          "action": "在公共桌面打翻饮料后，2 分钟内擦掉可见积液。",
+          "execution_hint": "先拿纸巾吸水；不够就说“借点纸”，事故报告免写。",
+          "humor_variants": [
+            "打翻饮料，别等它自行蒸发。",
+            "饮料洒了，不开桌面水景项目。"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "bathroom",
+      "title": "浴室使用",
+      "real_friction": "浴室只有一间，排队的人看不到里面还要多久。",
+      "space_types": [
+        "shared_home",
+        "short_stay"
+      ],
+      "levels": [
+        {
+          "id": "bathroom_15m",
+          "label": "单次连续占用浴室不超过 15 分钟",
+          "action": "单次连续占用浴室不超过 15 分钟。",
+          "execution_hint": "15 分钟到了先让出浴室，稍后再用，不用说明里面忙什么。",
+          "humor_variants": [
+            "浴室按次用，不办包月独占。",
+            "洗澡可以，别顺便闭关。"
+          ]
+        },
+        {
+          "id": "announce_shower_end",
+          "label": "洗澡前发预计结束时间",
+          "action": "开始洗澡前，在群里发送预计结束时间。",
+          "execution_hint": "只发“21:20”这样的具体时刻也算，不用直播洗澡进度。",
+          "humor_variants": [
+            "“马上洗完”不是一个具体时刻。",
+            "洗澡排队，不靠门外算命。"
+          ]
+        },
+        {
+          "id": "clear_drain_5m",
+          "label": "洗澡后 5 分钟内清走排水口可见头发",
+          "action": "洗澡结束后 5 分钟内，将排水口可见头发放入垃圾桶。",
+          "execution_hint": "用纸巾包起可见头发丢进桶，5 分钟内完成，不用徒手捡。",
+          "humor_variants": [
+            "洗完澡，不留毛发考古现场。",
+            "排水口，不留洗澡纪念品。"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "food",
+      "title": "食物存放",
+      "real_friction": "食品是否共享、何时放入和开封后如何收好，没有统一默认值。",
+      "space_types": [
+        "shared_home",
+        "short_stay",
+        "club_room"
+      ],
+      "levels": [
+        {
+          "id": "label_food_use",
+          "label": "公共区域食物标“自用”或“共享”",
+          "action": "食品放入公共存放区前，在包装或随附纸条上标注“自用”或“共享”。",
+          "execution_hint": "没贴纸就写张纸条放旁边，“自用”或“共享”二选一即可。",
+          "humor_variants": [
+            "放进公共区，不等于开席。",
+            "吃之前别靠猜，放之前写明白。"
+          ]
+        },
+        {
+          "id": "label_fridge_date",
+          "label": "食品放进冰箱前标放入日期",
+          "action": "食品放进公共冰箱前，在包装或随附纸条上标注放入日期。",
+          "execution_hint": "写日期的小纸条与食品一起装袋，不用制作正式标签。",
+          "humor_variants": [
+            "冰箱存货，不做年代鉴定题。",
+            "放进冰箱，请附一条时间线索。"
+          ]
+        },
+        {
+          "id": "seal_open_food",
+          "label": "食品开封取用后夹袋口或盖盒盖",
+          "action": "食品开封取用后，放回存放区前夹好袋口或盖好盒盖。",
+          "execution_hint": "没封口夹就连包装放进带盖容器，盖好再放回。",
+          "humor_variants": [
+            "开封试吃，不附赠全柜同款气味。",
+            "吃完封口，不留开放式结局。"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "shared_devices",
+      "title": "共享设备",
+      "real_friction": "设备的预约时间和使用后的收尾没有说清，下次使用只能四处找。",
+      "space_types": [
+        "shared_home",
+        "short_stay",
+        "club_room"
+      ],
+      "levels": [
+        {
+          "id": "projector_off",
+          "label": "投影用完通过关机功能关机，遥控器归位",
+          "action": "投影使用结束后，通过遥控器或菜单的关机功能关机；遥控器放回取用处，忘记位置则放在公共桌面并在群里报位置。",
+          "execution_hint": "不会关就请同伴指认遥控器或菜单的关机操作，不攀爬设备。",
+          "humor_variants": [
+            "散会了，不留投影待机加时赛。",
+            "投完就关，不给空墙继续放映。"
+          ]
+        },
+        {
+          "id": "return_shared_cable",
+          "label": "共享充电线用完放回取用处",
+          "action": "共享充电线使用结束后 5 分钟内放回取用位置；忘记位置则放在插座旁并在群里报位置。",
+          "execution_hint": "忘了原位就放插座旁，在群里发“线在插座旁”，5 分钟内完成。",
+          "humor_variants": [
+            "借根线，不顺手续成私人配件。",
+            "充电结束，公共线不跟包走。"
+          ]
+        },
+        {
+          "id": "reserve_device_window",
+          "label": "使用前登记设备和起止时间",
+          "action": "使用共享设备前，在群里写明设备名称、开始时间和结束时间。",
+          "execution_hint": "时间未定就先不占设备，定好再写名称和起止时间。",
+          "humor_variants": [
+            "共享设备，不靠放个包先占上。",
+            "设备使用权，不是先到永久得。"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "air_conditioning",
+      "title": "空调温度",
+      "real_friction": "遥控器上的温度被反复改动，其他人不知道改变已经发生。",
+      "space_types": [
+        "shared_home",
+        "short_stay",
+        "club_room"
+      ],
+      "levels": [
+        {
+          "id": "announce_temperature",
+          "label": "改温度前在群里发新温度",
+          "action": "改变空调设定温度前，先在群里发送目标温度，例如“调到 26℃”。遥控器可以静音操作，调温消息不能省略。",
+          "execution_hint": "只发“26℃”也算，不用提交冷热感受小作文；不方便发消息，就先不调。",
+          "humor_variants": [
+            "调个温度，不必执行秘密任务。",
+            "调温消息，不是可跳过的片头。"
+          ]
+        },
+        {
+          "id": "windows_closed_with_ac",
+          "label": "空调运行时关门窗，开窗前关空调",
+          "action": "空调运行时关闭通向室外的门窗；需要开窗时先关闭空调。",
+          "execution_hint": "想通风就先关空调再开窗，不用解释自己站哪种温度。",
+          "humor_variants": [
+            "开空调，不承包室外降温。",
+            "电费不含整条街的温控服务。"
+          ]
+        },
+        {
+          "id": "temperature_step_2c_15m",
+          "label": "每次最多调 2℃，间隔至少 15 分钟",
+          "action": "每次调温不超过 2℃，两次调温间隔至少 15 分钟。",
+          "execution_hint": "还想调就设 15 分钟计时，到点再调，每次仍不超过 2℃。",
+          "humor_variants": [
+            "调温别连招，给体感一点延迟。",
+            "遥控器不是冷暖对战手柄。"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "shared_desks",
+      "title": "公共桌面",
+      "real_friction": "临时放下的包和物品长期占位，下一位不知道能否坐下。",
+      "space_types": [
+        "shared_home",
+        "short_stay",
+        "club_room"
+      ],
+      "levels": [
+        {
+          "id": "clear_desk_5m",
+          "label": "结束使用后 5 分钟内清空个人物品",
+          "action": "结束使用公共桌面后 5 分钟内，收走本次放置的个人物品。",
+          "execution_hint": "来不及分类就先一并装包，5 分钟内腾出桌面，回头再整理。",
+          "humor_variants": [
+            "公共桌面，不支持永久圈地。",
+            "用完桌子，不靠留包自动续座。"
+          ]
+        },
+        {
+          "id": "bags_off_table",
+          "label": "包和外套放椅背或自己的脚边",
+          "action": "使用公共桌面时，包和外套放在椅背或自己的脚边，不堆在桌上。",
+          "execution_hint": "椅背挂不下就放自己脚边，留出通道，不必精心摆放。",
+          "humor_variants": [
+            "桌面有限，包和外套不单独占座。",
+            "带包入场，不含一张桌面床位。"
+          ]
+        },
+        {
+          "id": "clear_before_leaving",
+          "label": "离开座位前将桌面个人物品装包带走",
+          "action": "离开座位前，将桌面个人物品收进包内并带离桌面。",
+          "execution_hint": "先把个人物品一并装包带走，分类可以等会儿再说。",
+          "humor_variants": [
+            "离座带走物品，不留占位凭证。",
+            "离座带包，别留下无人值守摊位。"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "time_slots",
+      "title": "使用时段",
+      "real_friction": "活动室的开始和结束时间没有同步，前后两拨人容易撞在门口。",
+      "space_types": [
+        "club_room"
+      ],
+      "levels": [
+        {
+          "id": "register_slot",
+          "label": "使用前登记开始和结束时间",
+          "action": "使用活动室前，在群里登记开始时间和结束时间。",
+          "execution_hint": "时间没定就先不占，确定起止时间后发群里即可。",
+          "humor_variants": [
+            "活动室不是谁先开门就归谁。",
+            "使用时段，别靠大家心照不宣。"
+          ]
+        },
+        {
+          "id": "pack_5m_before_end",
+          "label": "结束前 5 分钟收物，到点腾出区域",
+          "action": "预约结束前 5 分钟开始收物，结束时间到达时腾出预约区域。",
+          "execution_hint": "讨论没完就带上物品，到预约区域外接着聊。",
+          "humor_variants": [
+            "散场时间，不是开始收拾的时间。",
+            "预约到点，不附赠收尾加时。"
+          ]
+        },
+        {
+          "id": "request_extension_10m",
+          "label": "至少提前 10 分钟申请延时，获同意后延时",
+          "action": "延时至少在预约结束前 10 分钟提出；收到下一时段使用者同意后才延时。",
+          "execution_hint": "没收到下一时段使用者同意，就按原时间离开，不用追问原因。",
+          "humor_variants": [
+            "“再用一会儿”不自动生效。",
+            "加时可以申请，不能默认赠送。"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "reset_room",
+      "title": "活动复位",
+      "real_friction": "活动结束了，桌椅和共享材料却停留在上一场的布置中。",
+      "space_types": [
+        "short_stay",
+        "club_room"
+      ],
+      "levels": [
+        {
+          "id": "chairs_back_10m",
+          "label": "活动结束后 10 分钟内推回椅子",
+          "action": "活动结束后 10 分钟内，将本次使用的椅子推回桌下。",
+          "execution_hint": "先放下手里的东西，再推回用过的椅子，10 分钟内完成。",
+          "humor_variants": [
+            "活动结束，不留座椅迷宫。",
+            "椅子挪过，别让下一场重新排阵。"
+          ]
+        },
+        {
+          "id": "return_materials_10m",
+          "label": "活动结束后 10 分钟内归还共享材料",
+          "action": "活动结束后 10 分钟内，将共享材料放回取用位置；忘记位置则集中放到公共桌面一角并在群里报位置。",
+          "execution_hint": "忘了原位就集中放桌角，群里报“材料在桌角”，10 分钟内完成。",
+          "humor_variants": [
+            "材料用完，不开全屋寻宝副本。",
+            "下一场的准备，不该从找东西开始。"
+          ]
+        },
+        {
+          "id": "erase_session_notes",
+          "label": "离开前擦掉本次新增的白板书写",
+          "action": "活动结束离开前，擦掉本次新增的白板书写，保留使用前已有的内容。",
+          "execution_hint": "没板擦用干净软布；旧内容拿不准就保留，不替上一场做决定。",
+          "humor_variants": [
+            "本次灵感，别直接占到下次活动。",
+            "白板可借用，不默认永久置顶。"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "departure",
+      "title": "离场检查",
+      "real_friction": "大家以为离场收尾会由最后一位完成，但没有约定具体检查动作。",
+      "space_types": [
+        "shared_home",
+        "short_stay",
+        "club_room"
+      ],
+      "levels": [
+        {
+          "id": "lights_and_ac_off",
+          "label": "最后离开时关闭照明和空调",
+          "action": "最后一个人离开空间时，关闭室内照明和空调。",
+          "execution_hint": "不会操作就请同伴指认开关，确认照明和空调关闭再走。",
+          "humor_variants": [
+            "全员离场，不保留无人豪华包间。",
+            "散场之后，不替空房间开空调。"
+          ]
+        },
+        {
+          "id": "close_door_and_report",
+          "label": "最后离开时关门并发“已离开”",
+          "action": "最后一个人离开时，确认门已关合，并在群里发送“已离开”。",
+          "execution_hint": "门没关合就重新关好，再发“已离开”三个字即可。",
+          "humor_variants": [
+            "退场请留消息，别留推理题。",
+            "人已离开，不靠群里猜结局。"
+          ]
+        },
+        {
+          "id": "windows_shut_on_exit",
+          "label": "最后离开时关上可开启的室外窗",
+          "action": "最后一个人离开时，关上室内可开启且通向室外的窗户。",
+          "execution_hint": "够不到窗就请同伴代关，确认关闭后再走，不需要攀爬。",
+          "humor_variants": [
+            "人走关窗，不开启天气盲盒。",
+            "散场关窗，不赌今晚天气预报。"
+          ]
+        }
+      ]
+    }
+  ]
+}

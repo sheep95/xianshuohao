@@ -1,0 +1,180 @@
+/* Studio layer: refined product polish over the warm memo system. Frontend only. */
+:root {
+  --ink: #23302a; --muted: #5f6a62; --line: #e6e4da;
+  --grid-dot: #d9d3c133; --header-glass: #faf7efd9;
+  --lift-shadow: 0 2px 4px #6b5a2a0d, 0 14px 34px #8a6d2a1f;
+  --rest-shadow: 0 1px 2px #6b5a2a0a, 0 8px 26px #8a6d2a14;
+  --spring: cubic-bezier(.34, 1.56, .64, 1);
+  --claim-rail: #eaf6ef;
+}
+body {
+  background-color: var(--paper);
+  background-image: radial-gradient(var(--grid-dot) 1px, transparent 1.2px);
+  background-size: 22px 22px;
+}
+
+/* Header: quiet glass bar that stays put while pages move. */
+.site-header {
+  position: sticky; top: 0; z-index: 40;
+  background: var(--header-glass);
+  backdrop-filter: saturate(1.4) blur(14px);
+  view-transition-name: site-header;
+}
+.quiet-link { border-radius: 999px; padding: 8px 14px; transition: background-color 160ms ease, color 160ms ease; }
+.quiet-link:hover { background: var(--card); color: var(--ink); }
+.brand .brand-mark { transition: transform 260ms var(--spring); }
+.brand:hover .brand-mark { transform: rotate(-8deg) scale(1.06); }
+
+/* Shared pressable feel for every control. */
+.action-button, .secondary-button, .primary-button, .quiet-button, .space-option, .scene-choice, .behavior-choice, .swap-options label {
+  transition: transform 220ms var(--spring), box-shadow 200ms ease, background-color 160ms ease, border-color 160ms ease, color 160ms ease;
+}
+.action-button, .secondary-button, .primary-button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+.action-button { box-shadow: 0 1px 0 #ffffff66 inset, 0 6px 16px #5bb98c40; }
+.action-button:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 1px 0 #ffffff66 inset, 0 10px 24px #5bb98c55; }
+.secondary-button:hover:not(:disabled), .primary-button:hover:not(:disabled), .quiet-button:hover:not(:disabled) { transform: translateY(-1px); background: var(--selected); }
+.action-button:active:not(:disabled), .secondary-button:active:not(:disabled), .primary-button:active:not(:disabled), .quiet-button:active:not(:disabled) {
+  transform: scale(.95); transition-duration: 90ms;
+}
+.hero-cta { box-shadow: 0 6px 0 var(--selected), 0 14px 30px #5bb98c40; }
+.hero-cta svg { transition: transform 260ms var(--spring); }
+.hero-cta:hover svg { transform: translate(3px, -3px); }
+.primary-button .dice-icon { transition: transform 420ms var(--spring); }
+.primary-button:hover .dice-icon { transform: rotate(90deg); }
+
+/* Lucide icons sit in soft tinted tiles. */
+.friction-emoji, .space-icon {
+  display: inline-grid; place-items: center; flex-shrink: 0;
+  width: 34px; height: 34px; border-radius: 11px;
+  background: var(--selected); color: var(--dice-ink); font-size: 0; line-height: 1;
+}
+.space-icon { width: 40px; height: 40px; border-radius: 13px; background: var(--dice-wash); }
+.space-option[aria-pressed="true"] .space-icon, .scene-choice:has(input:checked) .space-icon { background: var(--mint); color: var(--mint-ink); }
+.scene-choice-copy .space-icon { margin-bottom: 10px; }
+.review-heading .space-icon { width: 26px; height: 26px; border-radius: 8px; vertical-align: -7px; }
+.memo-sticker { color: var(--coral); }
+.hint-label, .rule-interface > span, .draft-interface > strong { display: inline-flex; align-items: center; gap: 4px; }
+.selection-meter span { display: inline-flex; align-items: center; gap: 6px; }
+
+/* Cards respond to the pointer. */
+.space-option:hover, .scene-choice:hover { transform: translateY(-3px); box-shadow: var(--lift-shadow); }
+.space-option:active, .scene-choice:active { transform: scale(.97); }
+.behavior-choice:hover { border-color: var(--mint); transform: translateX(3px); }
+.constitution, .workflow-panel, .friction-choice, .join-panel, .invite-strip { box-shadow: var(--rest-shadow); }
+.friction-choice { transition: box-shadow 200ms ease, transform 220ms var(--spring); }
+.friction-choice:hover { box-shadow: var(--lift-shadow); }
+.friction-choice summary, .constitution-rules summary { cursor: pointer; transition: color 150ms ease; }
+.friction-choice summary:hover strong, .constitution-rules summary:hover h3 { color: var(--dice-ink); }
+.friction-choice summary > span::after { content: ""; display: inline-block; width: 7px; height: 7px; margin-left: 8px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: translateY(-2px) rotate(45deg); transition: transform 240ms var(--spring); }
+.friction-choice[open] summary > span::after { transform: translateY(1px) rotate(-135deg); }
+.detail-plus { display: inline-grid; transition: transform 260ms var(--spring); }
+details[open] > summary .detail-plus { transform: rotate(180deg); }
+
+/* Homepage photograph. */
+
+/* Claim wall: one note per row, every note full width. */
+.draft-summary { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 16px; }
+.draft-summary h2 { margin: 0; }
+.draft-summary > strong { padding: 4px 12px; border-radius: 999px; background: var(--selected); font-size: 13px; }
+.draft-summary p { flex-basis: 100%; margin: 0; }
+.draft-rules { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; padding: 0; margin: 0; list-style: none; }
+.draft-rule {
+  flex: none; position: relative; display: grid;
+  grid-template-columns: 92px minmax(0, 1fr) 216px; gap: 0 24px; align-items: center;
+  padding: 22px 26px 22px 0; border-radius: 24px; overflow: visible;
+  background: var(--card); box-shadow: var(--rest-shadow);
+  transition: transform 260ms var(--spring), box-shadow 220ms ease;
+}
+.draft-rule:hover { transform: translateY(-3px); box-shadow: var(--lift-shadow); }
+.draft-rule::before {
+  content: ""; position: absolute; top: -8px; left: 46px; width: 54px; height: 16px;
+  background: var(--tape); border-radius: 3px; transform: rotate(-4deg);
+}
+.draft-rule-rail { align-self: stretch; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; border-right: 1px dashed var(--line); transition: background-color 260ms ease; border-radius: 24px 0 0 24px; margin-block: -22px; padding-block: 22px; }
+.draft-rule-rail .friction-emoji { width: 46px; height: 46px; border-radius: 15px; }
+.draft-rule.is-claimed .draft-rule-rail { background: var(--claim-rail); }
+.draft-rule.is-claimed .draft-rule-rail .friction-emoji { background: var(--mint); color: var(--mint-ink); }
+.draft-number { font-size: 11px; letter-spacing: .04em; color: var(--muted); }
+.draft-rule-body { min-width: 0; }
+.draft-rule-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin: 0 0 6px; }
+.draft-rule h3 { margin: 0; font-size: 18px; line-height: 1.6; }
+.draft-action { margin: 0 0 6px; }
+.draft-interface { margin: 0; }
+.rule-status { display: inline-flex; align-items: center; gap: 4px; flex-shrink: 0; padding: 4px 10px; border-radius: 999px; white-space: nowrap; }
+.rule-status.claimed { animation: status-pop 420ms var(--spring); }
+.draft-rule .claim-details { display: flex; align-items: center; gap: 6px; margin: 10px 0 0; padding: 0; color: var(--muted); }
+.draft-rule-actions.button-row { display: flex; flex-direction: column; align-items: stretch; gap: 8px; margin: 0; }
+.draft-rule-actions.button-row > button { width: 100%; font-size: 13px; }
+.draft-rule-actions.muted { font-size: 12px; margin: 0; }
+@keyframes status-pop { 0% { transform: scale(.6); } 100% { transform: scale(1); } }
+
+/* Claim feedback: a stamp lands, confetti scatters. */
+.claim-pop { position: absolute; inset: auto 50% 100% auto; translate: 50% -6px; top: auto; right: auto; padding: 0; background: none; animation: claim-life 1100ms linear both; }
+.claim-stamp {
+  display: block; padding: 6px 12px; border: 2px solid var(--red); border-radius: 10px;
+  color: var(--red); background: var(--card); font-size: 13px; letter-spacing: .1em; white-space: nowrap;
+  animation: stamp-down 520ms var(--spring) both;
+}
+.claim-pop i { width: 6px; height: 9px; animation: confetti 950ms var(--ease-soft) both; }
+.claim-pop i:nth-child(2) { --x: -58px; --y: -26px; }
+.claim-pop i:nth-child(3) { --x: 52px; --y: -40px; background: var(--coral); }
+.claim-pop i:nth-child(4) { --x: -30px; --y: -58px; background: var(--lemon); }
+.claim-pop i:nth-child(5) { --x: 62px; --y: 6px; }
+.claim-pop i:nth-child(6) { --x: -64px; --y: 12px; background: var(--coral); }
+.claim-pop i:nth-child(7) { --x: 18px; --y: -66px; background: var(--lemon); }
+.claim-pop i:nth-child(8) { --x: 36px; --y: 22px; border-radius: 50%; }
+.claim-pop i:nth-child(9) { --x: -12px; --y: 30px; background: var(--coral); border-radius: 50%; }
+@keyframes stamp-down { 0% { opacity: 0; transform: scale(1.8) rotate(-14deg); } 60% { opacity: 1; transform: scale(.94) rotate(-7deg); } 100% { opacity: 1; transform: scale(1) rotate(-7deg); } }
+@keyframes claim-life { 0%, 80% { opacity: 1; } 100% { opacity: 0; } }
+
+/* Swap feedback: card border glows and a check bounces in. */
+.swap-flash { display: grid; place-items: start end; padding: 14px; color: var(--mint-ink); z-index: 2; animation: saved-border 900ms ease-out both; }
+.swap-flash svg { background: var(--mint); border-radius: 50%; padding: 4px; width: 30px; height: 30px; animation: check-bounce 600ms var(--spring) both; }
+@keyframes check-bounce { 0% { transform: scale(0); } 100% { transform: scale(1); } }
+.swap-arrow-icon { display: inline-grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--selected); color: var(--dice-ink); }
+.boundary-notice.changed { display: inline-flex; gap: 6px; align-items: center; }
+.swap-options label:hover { transform: translateY(-2px); }
+.swap-options label:active { transform: scale(.96); }
+
+/* Homepage example rules also open smoothly. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (interpolate-size: allow-keywords) and selector(details::details-content) {
+    .constitution-rules details { interpolate-size: allow-keywords; }
+    .constitution-rules details::details-content { block-size: 0; overflow: clip; transition: block-size 260ms var(--ease-soft), content-visibility 260ms allow-discrete; }
+    .constitution-rules details[open]::details-content { block-size: auto; }
+  }
+  .draft-rules > li { animation: note-enter 420ms var(--ease-soft) both; }
+  .draft-rules > li:nth-child(2) { animation-delay: 50ms; }
+  .draft-rules > li:nth-child(3) { animation-delay: 100ms; }
+  .draft-rules > li:nth-child(4) { animation-delay: 150ms; }
+  .draft-rules > li:nth-child(5) { animation-delay: 200ms; }
+  .draft-rules > li:nth-child(n+6) { animation-delay: 250ms; }
+}
+
+/* Route and step view transitions live in motion.css. */
+
+@media (max-width: 900px) {
+  .draft-rule { grid-template-columns: 76px minmax(0, 1fr); padding-right: 22px; }
+  .draft-rule-actions { grid-column: 2; margin-top: 16px !important; }
+  .draft-rule-actions.button-row { flex-direction: row; }
+  .draft-rule-actions.button-row > button { width: auto; flex: 1; }
+}
+@media (max-width: 600px) {
+  .site-header { margin-inline: -16px; padding-inline: 16px; }
+  .draft-rule { grid-template-columns: minmax(0, 1fr); padding: 20px; }
+  .draft-rule-rail { flex-direction: row; justify-content: flex-start; border-right: 0; border-bottom: 1px dashed var(--line); margin: -20px -20px 14px; padding: 14px 20px; border-radius: 24px 24px 0 0; }
+  .draft-rule-rail .friction-emoji { width: 38px; height: 38px; }
+  .draft-rule::before { left: auto; right: 24px; }
+  .draft-rule-actions { grid-column: 1; }
+  .draft-rule-actions.button-row { flex-direction: column; }
+  .draft-rule-actions.button-row > button { width: 100%; }
+  .draft-rule h3 { font-size: 17px; }
+}
+/* Create step: icon leads the scene title. */
+.scene-choice-copy strong { display: flex; align-items: center; gap: 12px; }
+.scene-choice-copy .space-icon { margin-bottom: 0; }
+@media (max-width: 600px) {
+  .space-option .space-icon { display: none; }
+  .space-option { justify-content: center; text-align: center; }
+  .space-title { white-space: nowrap; }
+}

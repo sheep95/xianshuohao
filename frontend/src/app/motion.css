@@ -1,0 +1,263 @@
+/* Center shared icon tiles and keep the accordion label in its own column. */
+.friction-choice summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: 10px;
+  list-style: none;
+}
+.friction-choice summary::-webkit-details-marker { display: none; }
+.friction-choice summary::marker { content: ""; }
+.friction-choice summary > strong { line-height: 1.35; }
+.friction-choice summary > strong .friction-emoji { display: inline-grid; margin-left: 0; }
+.friction-choice summary > span { display: inline-flex; align-items: center; }
+.friction-emoji, .space-icon, .brand-mark, .swap-arrow-icon { line-height: 0; }
+.friction-emoji > svg, .space-icon > svg, .brand-mark > svg, .swap-arrow-icon > svg { display: block; }
+.action-button > svg, .secondary-button > svg, .primary-button > svg, .hint-label > svg { flex: none; }
+.review-heading > p { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+
+
+/* ---------------------------------------------------------------------------
+   Motion system. One rhythm for the whole app: fast exits, slightly longer
+   entrances, opacity plus short travel. Movement is dropped for reduced motion.
+   ------------------------------------------------------------------------ */
+:root {
+  --ease-out: cubic-bezier(.22, .61, .36, 1);
+  --ease-in: cubic-bezier(.5, 0, .75, 0);
+  --ease-exit: cubic-bezier(.2, .2, .4, 1);
+  --ease-press: cubic-bezier(.3, 1.4, .6, 1);
+  --motion-fast: 140ms;
+  --motion-base: 220ms;
+  --motion-route-out: 130ms;
+  --motion-route-in: 250ms;
+}
+
+/* Route transitions (React <ViewTransition> + Link transitionTypes). */
+::view-transition { pointer-events: none; }
+::view-transition-group(root) { animation-duration: var(--motion-route-in); }
+::view-transition-group(site-header) { animation: none; z-index: 10; }
+::view-transition-old(site-header) { display: none; }
+::view-transition-new(site-header) { animation: none; }
+::view-transition-old(.nav-forward) { --vt-x: -18px; animation: var(--motion-route-out) var(--ease-exit) both vt-leave; }
+::view-transition-new(.nav-forward) { --vt-x: 28px; animation: var(--motion-route-in) var(--ease-out) 70ms both vt-arrive; }
+::view-transition-old(.nav-back) { --vt-x: 18px; animation: var(--motion-route-out) var(--ease-exit) both vt-leave; }
+::view-transition-new(.nav-back) { --vt-x: -28px; animation: var(--motion-route-in) var(--ease-out) 70ms both vt-arrive; }
+::view-transition-old(.page-fade) { animation: 120ms ease-in both vt-leave; }
+::view-transition-new(.page-fade) { --vt-y: 8px; animation: var(--motion-route-in) var(--ease-out) both vt-arrive; }
+/* Creation steps: same page, shorter travel, direction follows next / previous. */
+::view-transition-old(.step-forward) { --vt-x: -14px; animation: 110ms var(--ease-exit) both vt-leave; }
+::view-transition-new(.step-forward) { --vt-x: 22px; animation: var(--motion-base) var(--ease-out) 60ms both vt-arrive; }
+::view-transition-old(.step-back) { --vt-x: 14px; animation: 110ms var(--ease-exit) both vt-leave; }
+::view-transition-new(.step-back) { --vt-x: -22px; animation: var(--motion-base) var(--ease-out) 60ms both vt-arrive; }
+/* Old and new snapshots of a step or page may differ in height: keep each at its own size. */
+::view-transition-group(.nav-forward), ::view-transition-group(.nav-back), ::view-transition-group(.page-fade),
+::view-transition-group(.step-forward), ::view-transition-group(.step-back) { animation-duration: 0s; }
+@keyframes vt-leave { to { opacity: 0; translate: var(--vt-x, 0px) var(--vt-y, 0px); } }
+@keyframes vt-arrive { from { opacity: 0; translate: var(--vt-x, 0px) var(--vt-y, 0px); } }
+
+@media (prefers-reduced-motion: reduce) {
+  /* Keep a brief crossfade so the change is still noticeable, without travel. */
+  ::view-transition-old(*), ::view-transition-new(*) { --vt-x: 0px !important; --vt-y: 0px !important; animation-duration: 120ms !important; animation-delay: 0s !important; }
+}
+
+/* Shared header sits in the same place on every page: the workflow shell keeps
+   the homepage width and narrows only its content column. */
+.site-shell.workflow-shell { width: min(1160px, calc(100% - 64px)); max-width: none; }
+.workflow-shell > main, .workflow-shell > .site-footer { max-width: 1040px; margin-inline: auto; }
+@media (max-width: 900px) {
+  .site-shell.workflow-shell { width: calc(100% - 40px); }
+  .workflow-shell > main, .workflow-shell > .site-footer { max-width: 760px; }
+}
+@media (max-width: 600px) { .site-shell.workflow-shell { width: calc(100% - 32px); } }
+
+@media (prefers-reduced-motion: no-preference) {
+  .page-transition[data-arrive="pop"] { animation: page-pop var(--motion-base) var(--ease-out); }
+}
+@keyframes page-pop { from { opacity: .25; } }
+
+/* ---------------------------------------------------------------------------
+   Brand opening. Hidden unless the inline script marks <html class="has-opening">.
+   ------------------------------------------------------------------------ */
+.opening { display: none; }
+html.has-opening { overflow: hidden; }
+html.has-opening .opening {
+  position: fixed; z-index: 100; inset: 0;
+  display: grid; place-items: center; overflow: auto;
+  padding: 72px 20px 40px; text-align: center; color: var(--ink);
+  background:
+    radial-gradient(var(--grid-dot) 1px, transparent 1.2px) 0 0 / 22px 22px,
+    radial-gradient(ellipse at 50% 38%, #fffdf6 0%, var(--paper) 70%);
+}
+.opening-skip {
+  position: absolute; inset: 16px 20px auto auto;
+  min-height: 44px; padding: 0 18px; border: 1px solid var(--line); border-radius: 999px;
+  background: var(--card); color: var(--muted); font-size: 14px; cursor: pointer;
+  transition: color var(--motion-fast) ease, background-color var(--motion-fast) ease, scale var(--motion-fast) var(--ease-out);
+}
+.opening-skip:hover { color: var(--ink); background: var(--selected); }
+.opening-skip:active { scale: .96; }
+.opening-stage { width: min(100%, 600px); }
+.opening-board { position: relative; height: 212px; width: min(100%, 520px); margin: 0 auto 12px; padding: 0; list-style: none; }
+.opening-note {
+  position: absolute; display: flex; align-items: center; gap: 8px;
+  padding: 18px 20px 16px; border-radius: 6px 6px 16px 6px;
+  font-size: clamp(14px, 3.8vw, 18px); font-weight: 750; white-space: nowrap; color: var(--ink);
+  box-shadow: 0 1px 1px #5a4a2014, 0 10px 22px #5a4a201f;
+  rotate: var(--note-r);
+}
+.opening-note-1 { --note-r: -7deg; top: 40px; left: 0; background: #d8eedf; }
+.opening-note-2 { --note-r: 5deg; top: 0; right: 4%; background: #f8e7a8; }
+.opening-note-3 { --note-r: -2deg; bottom: 4px; left: 27%; background: #f9dfd2; }
+.opening-tape { position: absolute; top: -8px; left: calc(50% - 22px); width: 44px; height: 15px; border-radius: 2px; background: var(--tape); rotate: 3deg; }
+.opening-check { display: inline-grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--mint); color: var(--mint-ink); }
+.opening-title { display: inline-flex; align-items: center; gap: 14px; margin: 6px 0 10px; font-size: clamp(46px, 11vw, 78px); line-height: 1.1; font-weight: 900; letter-spacing: -.05em; }
+.opening-title .brand-mark { width: clamp(44px, 9vw, 64px); height: clamp(44px, 9vw, 64px); }
+.opening-line { margin: 0; color: var(--muted); font-size: clamp(15px, 4vw, 18px); line-height: 1.8; }
+.opening-enter {
+  display: inline-flex; align-items: center; justify-content: center; gap: 14px;
+  min-height: 58px; margin-top: 28px; padding: 0 32px; border: 0; border-radius: 999px;
+  background: var(--mint); color: var(--mint-ink); font-size: 18px; font-weight: 800; cursor: pointer;
+  box-shadow: 0 6px 0 var(--selected), 0 14px 30px #5bb98c40;
+  transition: background-color var(--motion-fast) ease, scale 90ms var(--ease-out), translate var(--motion-base) var(--ease-out);
+}
+.opening-enter:hover { background: var(--mint-hover); translate: 0 -2px; }
+.opening-enter:active { scale: .96; }
+.opening-enter:focus-visible { outline: 3px solid var(--mint-ink); outline-offset: 5px; }
+.opening-hint { margin: 16px 0 0; color: var(--muted); font-size: 13px; }
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Three real agreements stick on one by one, get ticked, then the name lands. */
+  html.has-opening .opening-note { animation: note-stick 420ms var(--ease-out) both; }
+  html.has-opening .opening-note-1 { animation-delay: 80ms; }
+  html.has-opening .opening-note-2 { animation-delay: 360ms; }
+  html.has-opening .opening-note-3 { animation-delay: 640ms; }
+  html.has-opening .opening-check { animation: check-tick 300ms var(--ease-press) both; }
+  html.has-opening .opening-note-1 .opening-check { animation-delay: 420ms; }
+  html.has-opening .opening-note-2 .opening-check { animation-delay: 700ms; }
+  html.has-opening .opening-note-3 .opening-check { animation-delay: 980ms; }
+  html.has-opening .opening-title { animation: title-land 420ms var(--ease-out) 1040ms both; }
+  html.has-opening .opening-line { animation: copy-rise 320ms var(--ease-out) 1240ms both; }
+  html.has-opening .opening-enter { animation: enter-ready 520ms var(--ease-out) 1380ms both; }
+  html.has-opening .opening-hint { animation: copy-rise 320ms var(--ease-out) 1420ms both; }
+  /* Leaving: notes drop toward the page, the paper lifts, the homepage rises in. */
+  html.opening-leaving .opening { animation: opening-out 340ms var(--ease-exit) forwards; pointer-events: none; }
+  html.opening-leaving .opening-stage { animation: stage-out 340ms var(--ease-exit) forwards; }
+  html.has-opening .home-shell .intro, html.has-opening .home-shell .example-stage { animation-play-state: paused; }
+  html.opening-leaving .home-shell .intro, html.opening-leaving .home-shell .example-stage { animation-play-state: running; }
+}
+@keyframes note-stick {
+  0% { opacity: 0; translate: 0 -22px; scale: 1.08; rotate: calc(var(--note-r) + 6deg); box-shadow: 0 22px 34px #5a4a2026; }
+  70% { opacity: 1; scale: .985; }
+  100% { opacity: 1; translate: 0 0; scale: 1; rotate: var(--note-r); }
+}
+@keyframes check-tick { from { opacity: 0; scale: .2; } }
+@keyframes title-land { from { opacity: 0; translate: 0 14px; scale: 1.06; } }
+@keyframes copy-rise { from { opacity: 0; translate: 0 8px; } }
+@keyframes enter-ready { 0% { box-shadow: 0 6px 0 var(--selected), 0 0 0 0 #5bb98c66; } 100% { box-shadow: 0 6px 0 var(--selected), 0 14px 30px #5bb98c40, 0 0 0 14px #5bb98c00; } }
+@keyframes opening-out { to { opacity: 0; } }
+@keyframes stage-out { to { opacity: 0; translate: 0 18px; scale: .985; } }
+@media (max-width: 600px) {
+  .opening-board { height: 178px; }
+  .opening-note-2 { right: 0; }
+  .opening-note-3 { left: 14%; }
+}
+
+/* Skip-link / programmatic focus targets do not need a ring around the whole column. */
+main[tabindex="-1"]:focus { outline: none; }
+
+/* ---------------------------------------------------------------------------
+   Homepage hierarchy: the main action leads, the example stays visible but
+   quieter, space choices and "换一组灵感" read as secondary.
+   ------------------------------------------------------------------------ */
+.home-shell .example-workbench { grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); column-gap: 72px; }
+.home-shell .intro h1 { font-size: clamp(40px, 4.4vw, 60px); line-height: 1.24; }
+.home-shell .intro-description { font-size: 17px; margin: 20px 0 30px; }
+.hero-cta {
+  min-height: 68px; padding: 0 14px 0 32px; gap: 22px; border-radius: 22px;
+  font-size: 20px; font-weight: 800; letter-spacing: -.01em;
+  box-shadow: 0 7px 0 #cfe9da, 0 18px 36px #3f9a6f38;
+}
+.hero-cta svg { box-sizing: content-box; padding: 8px; border-radius: 14px; background: #ffffff59; }
+.hero-cta:hover:not(:disabled) { box-shadow: 0 9px 0 #cfe9da, 0 22px 40px #3f9a6f45; }
+.home-shell .intro-reassurance { font-size: 13px; margin-top: 18px; }
+.home-shell .example-stage { max-width: 488px; }
+.home-shell .example-toolbar { margin-bottom: 18px; }
+.home-shell .constitution { padding: 20px 24px 16px; box-shadow: 0 1px 2px #6b5a2a0d, 0 10px 30px #8a6d2a17; }
+.home-shell .constitution-heading { margin: 12px 0 6px; }
+.home-shell .constitution-heading h2 { font-size: 22px; }
+.home-shell .constitution-rules summary { min-height: 46px; }
+.home-shell .example-toolbar .primary-button {
+  min-height: 44px; padding: 8px 16px; border: 1px solid var(--line); border-radius: 999px;
+  background: #ffffffb3; box-shadow: none; font-size: 13px;
+}
+.home-shell .example-toolbar .primary-button:hover:not(:disabled) { background: var(--card); border-color: var(--mint); }
+.home-shell .space-picker h2 { color: var(--muted); font-weight: 600; }
+.home-shell .space-option { background: #ffffff99; box-shadow: none; border: 1px solid var(--line); }
+.home-shell .space-option[aria-pressed="true"] { background: var(--selected); border-color: var(--mint); }
+.home-shell .space-option:hover { box-shadow: var(--rest-shadow); }
+@media (max-width: 900px) {
+  .home-shell .example-workbench { grid-template-columns: minmax(0, 1fr); }
+  .home-shell .intro h1 { font-size: 34px; }
+  .home-shell .intro-description { font-size: 15px; margin: 12px 0 20px; }
+  .hero-cta { min-height: 60px; font-size: 18px; padding-left: 26px; }
+  .home-shell .example-stage { max-width: 560px; }
+}
+@media (max-width: 600px) {
+  .hero-cta { width: 100%; justify-content: space-between; }
+}
+
+/* "换一组灵感": the old note peels away, the new one is pressed on. */
+::view-transition-old(.card-out) { --vt-x: -26px; animation: 150ms var(--ease-exit) both card-peel; }
+::view-transition-new(.card-in) { --vt-x: 30px; animation: 260ms var(--ease-out) 60ms both card-press; }
+::view-transition-group(.card-in), ::view-transition-group(.card-out) { animation-duration: 0s; }
+@keyframes card-peel { to { opacity: 0; translate: var(--vt-x) -6px; rotate: -2.5deg; } }
+@keyframes card-press { from { opacity: 0; translate: var(--vt-x) 8px; rotate: 2deg; scale: .98; } }
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(.card-out), ::view-transition-new(.card-in) { animation-name: vt-leave; }
+  ::view-transition-new(.card-in) { animation-name: vt-arrive; }
+}
+
+/* ---------------------------------------------------------------------------
+   Create flow, step 2: five segments fill as boundaries are chosen; the
+   behaviour list opens and closes smoothly (::details-content, playful.css).
+   ------------------------------------------------------------------------ */
+/* Specific enough to beat `.selection-meter div { display: flex }` in workflow.css. */
+.selection-meter .meter-pips { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; }
+.selection-meter .meter-pips > span { display: block; height: 8px; border-radius: 999px; background: #ffffffb3; box-shadow: inset 0 0 0 1px #5bb98c33; transition: background-color var(--motion-base) ease; }
+.selection-meter .meter-pips > span.is-on { background: var(--mint); box-shadow: none; }
+.friction-choice summary > span { gap: 6px; transition: color var(--motion-fast) ease; }
+.friction-choice:has(input:checked) summary > span { color: var(--dice-ink); font-weight: 650; }
+.friction-choice:has(input:checked) { box-shadow: 0 0 0 2px #5bb98c59, 0 8px 30px var(--memo-shadow); }
+.friction-choice summary > strong { min-width: 0; }
+.step-track li span { transition: background-color var(--motion-base) ease, color var(--motion-base) ease, scale var(--motion-base) var(--ease-press); }
+.step-track [aria-current="step"] span { scale: 1.08; }
+@media (prefers-reduced-motion: no-preference) {
+  .selection-meter .meter-pips > span.is-on { animation: pip-fill 300ms var(--ease-out); transform-origin: left center; }
+  .friction-choice::details-content { transition-timing-function: var(--ease-out) !important; transition-duration: 240ms !important; }
+}
+@keyframes pip-fill { from { scale: .15 1; } }
+/* Hover must not shift rows sideways: the opening list clips its overflow. */
+.behavior-choice:hover { transform: none; background: #fbfdf8; }
+.behavior-choice:has(input:checked):hover { background: var(--selected); }
+
+/* ---------------------------------------------------------------------------
+   Room: claim stamp, swap sheet in/out, replaced-card highlight. All of them
+   are triggered only after the request has succeeded.
+   ------------------------------------------------------------------------ */
+.claim-stamp { display: inline-flex; align-items: center; gap: 4px; }
+.claim-pop i { display: none; }
+@media (prefers-reduced-motion: no-preference) {
+  .draft-rule.is-celebrating { animation: claim-ring 760ms var(--ease-out); }
+  .draft-rule.is-celebrating .draft-rule-rail .friction-emoji { animation: tile-tick 420ms var(--ease-press); }
+  .draft-rule.is-swapped { animation: swap-glow 1300ms var(--ease-out); }
+  .swap-dialog[open] { animation: sheet-enter 260ms var(--ease-out); }
+  .swap-dialog[open]::backdrop { animation: backdrop-in 220ms ease-out; }
+  .swap-dialog.is-leaving { animation: sheet-leave 190ms var(--ease-exit) forwards; pointer-events: none; }
+  .swap-dialog.is-leaving::backdrop { animation: backdrop-out 190ms ease-in forwards; }
+}
+@keyframes claim-ring { 0% { box-shadow: 0 0 0 0 #5bb98c73, var(--rest-shadow); } 100% { box-shadow: 0 0 0 14px #5bb98c00, var(--rest-shadow); } }
+@keyframes tile-tick { 0% { scale: .7; } 100% { scale: 1; } }
+@keyframes swap-glow { 0%, 35% { background-color: #eef8f1; box-shadow: 0 0 0 3px #5bb98c80, var(--rest-shadow); } 100% { background-color: var(--card); box-shadow: 0 0 0 3px #5bb98c00, var(--rest-shadow); } }
+@keyframes sheet-leave { to { opacity: 0; transform: translateY(40px); } }
+@keyframes backdrop-in { from { opacity: 0; } }
+@keyframes backdrop-out { to { opacity: 0; } }

@@ -1,0 +1,37 @@
+# Dependencies and build output
+node_modules/
+.venv/
+.next/
+.next-dev/
+out/
+dist/
+build/
+*.egg-info/
+*.tsbuildinfo
+
+# Local configuration, caches, logs and runtime data
+.env
+.env.*
+!.env.example
+!**/.env.example
+.cache/
+.hallmark/
+.taste-skill/
+.logs/
+.runtime/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+backend/data/
+*.db
+*.sqlite
+*.sqlite3
+*.log
+
+# Local editor / OS files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

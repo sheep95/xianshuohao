@@ -1,0 +1,374 @@
+{
+  "schema_version": 1,
+  "examples": [
+    {
+      "id": "shared_home-1",
+      "is_example": true,
+      "space_type": "shared_home",
+      "space_label": "宿舍 / 合租",
+      "duration": "一周",
+      "group_name": "四人宿舍示例",
+      "participant_count": 4,
+      "rules": [
+        {
+          "friction_key": "night_sound",
+          "level_id": "quiet_2300",
+          "text": "23:00 后，不附赠全寝直播。 游戏照打，视频照刷。23:00 后停止外放音频和视频；继续听声音就戴耳机，没有耳机就静音。",
+          "execution_hint": "被提醒时先按静音，回一个 👋 就行，不用汇报这局还有多久。"
+        },
+        {
+          "friction_key": "lights",
+          "level_id": "desk_lamp_2300",
+          "text": "23:00 后，学习不附赠全寝照明。 23:00 后关闭顶灯，需要照明时改用台灯。",
+          "execution_hint": "没台灯就先暂停，或移到室外亮灯区，不用交代赶什么进度。"
+        },
+        {
+          "friction_key": "borrowing",
+          "level_id": "ask_before_borrowing",
+          "text": "放在桌上，不代表加入共享套餐。 借用他人物品前，先发消息问一句，收到“可以”后再拿。“就用一下”不算已经问过，没回复也不算默认同意。",
+          "execution_hint": "没收到回复就先不拿，不必追问原因，也不用解释为什么突然不借了。"
+        },
+        {
+          "friction_key": "trash",
+          "level_id": "meal_boxes_30m",
+          "text": "外卖已结束，桌面不办回顾展。 吃完外卖后 30 分钟内，将餐盒封袋放入垃圾桶。",
+          "execution_hint": "腾不出手先盖好餐盒，仍在 30 分钟内封袋入桶。"
+        },
+        {
+          "friction_key": "air_conditioning",
+          "level_id": "announce_temperature",
+          "text": "调个温度，不必执行秘密任务。 改变空调设定温度前，先在群里发送目标温度，例如“调到 26℃”。遥控器可以静音操作，调温消息不能省略。",
+          "execution_hint": "只发“26℃”也算，不用提交冷热感受小作文；不方便发消息，就先不调。"
+        }
+      ]
+    },
+    {
+      "id": "shared_home-2",
+      "is_example": true,
+      "space_type": "shared_home",
+      "space_label": "宿舍 / 合租",
+      "duration": "一周",
+      "group_name": "四人宿舍示例",
+      "participant_count": 4,
+      "rules": [
+        {
+          "friction_key": "lights",
+          "level_id": "lamp_toward_desk",
+          "text": "看书开灯，不开全寝发布会。 使用台灯时，灯头朝向桌面，不朝向床铺。",
+          "execution_hint": "先关灯再挪位置；调好朝向再打开，不用现场解释光路。"
+        },
+        {
+          "friction_key": "visitors",
+          "level_id": "no_visitors_after_2200",
+          "text": "22:00 后，续聊请换场地。 22:00 后不接待室内访客，仍需交流时移到室外。",
+          "execution_hint": "到点一起移到室外，不用搬出任何室友当理由。"
+        },
+        {
+          "friction_key": "borrowing",
+          "level_id": "announce_return_time",
+          "text": "借的时候痛快，还的时间也说痛快。 借用物品时，在群里写明物品名称和归还时间。",
+          "execution_hint": "归还时间没定就先不借，不用承诺一个自己也不信的时间。"
+        },
+        {
+          "friction_key": "trash",
+          "level_id": "replace_full_bag",
+          "text": "垃圾到桶口，就别挑战叠叠乐。 垃圾达到桶口时，扎紧旧袋并带到垃圾收集点；有新袋就换上，无新袋则在群里报缺袋。",
+          "execution_hint": "没新袋就先扎紧旧袋带走，在群里发“需要垃圾袋”。"
+        },
+        {
+          "friction_key": "cleaning",
+          "level_id": "clear_sink_after_use",
+          "text": "冲水不能把饭粒变成不存在。 用完水槽后、离开水槽前，将可见固体残渣放入垃圾桶。",
+          "execution_hint": "用纸巾包起残渣丢进垃圾桶，不需要徒手挑战。"
+        }
+      ]
+    },
+    {
+      "id": "shared_home-3",
+      "is_example": true,
+      "space_type": "shared_home",
+      "space_label": "宿舍 / 合租",
+      "duration": "一周",
+      "group_name": "四人宿舍示例",
+      "participant_count": 4,
+      "rules": [
+        {
+          "friction_key": "borrowing",
+          "level_id": "return_after_use_5m",
+          "text": "用完就还，不自动续成长期持有。 借用物品使用结束后 5 分钟内，放回取用位置或当面交还。",
+          "execution_hint": "忘了原位就当面交还，不用补一篇物品旅行报告。"
+        },
+        {
+          "friction_key": "trash",
+          "level_id": "pack_before_leaving",
+          "text": "来过的证据，不用靠零食袋。 离开公共空间前，将本次产生的包装物放入垃圾桶。",
+          "execution_hint": "桶满就把包装封袋带到垃圾收集点，不用找谁来接班。"
+        },
+        {
+          "friction_key": "cleaning",
+          "level_id": "wipe_spill_2m",
+          "text": "打翻饮料，别等它自行蒸发。 在公共桌面打翻饮料后，2 分钟内擦掉可见积液。",
+          "execution_hint": "先拿纸巾吸水；不够就说“借点纸”，事故报告免写。"
+        },
+        {
+          "friction_key": "bathroom",
+          "level_id": "clear_drain_5m",
+          "text": "排水口，不留洗澡纪念品。 洗澡结束后 5 分钟内，将排水口可见头发放入垃圾桶。",
+          "execution_hint": "用纸巾包起可见头发丢进桶，5 分钟内完成，不用徒手捡。"
+        },
+        {
+          "friction_key": "food",
+          "level_id": "seal_open_food",
+          "text": "开封试吃，不附赠全柜同款气味。 食品开封取用后，放回存放区前夹好袋口或盖好盒盖。",
+          "execution_hint": "没封口夹就连包装放进带盖容器，盖好再放回。"
+        }
+      ]
+    },
+    {
+      "id": "short_stay-1",
+      "is_example": true,
+      "space_type": "short_stay",
+      "space_label": "短租 / 民宿",
+      "duration": "三天",
+      "group_name": "三人旅行示例",
+      "participant_count": 3,
+      "rules": [
+        {
+          "friction_key": "bathroom",
+          "level_id": "bathroom_15m",
+          "text": "浴室按次用，不办包月独占。 单次连续占用浴室不超过 15 分钟。",
+          "execution_hint": "15 分钟到了先让出浴室，稍后再用，不用说明里面忙什么。"
+        },
+        {
+          "friction_key": "food",
+          "level_id": "label_food_use",
+          "text": "吃之前别靠猜，放之前写明白。 食品放入公共存放区前，在包装或随附纸条上标注“自用”或“共享”。",
+          "execution_hint": "没贴纸就写张纸条放旁边，“自用”或“共享”二选一即可。"
+        },
+        {
+          "friction_key": "cleaning",
+          "level_id": "wipe_table_5m",
+          "text": "桌面不保留上一餐的存档。 用完公共桌面后 5 分钟内，擦掉本次留下的可见残渣和水渍。",
+          "execution_hint": "没抹布就用纸巾擦，纸巾随后入桶，不用补全清洁装备。"
+        },
+        {
+          "friction_key": "night_sound",
+          "level_id": "quiet_2300",
+          "text": "深夜上分，不含全寝解说服务。 游戏照打，视频照刷。23:00 后停止外放音频和视频；继续听声音就戴耳机，没有耳机就静音。",
+          "execution_hint": "被提醒时先按静音，回一个 👋 就行，不用汇报这局还有多久。"
+        },
+        {
+          "friction_key": "departure",
+          "level_id": "close_door_and_report",
+          "text": "退场请留消息，别留推理题。 最后一个人离开时，确认门已关合，并在群里发送“已离开”。",
+          "execution_hint": "门没关合就重新关好，再发“已离开”三个字即可。"
+        }
+      ]
+    },
+    {
+      "id": "short_stay-2",
+      "is_example": true,
+      "space_type": "short_stay",
+      "space_label": "短租 / 民宿",
+      "duration": "三天",
+      "group_name": "三人旅行示例",
+      "participant_count": 3,
+      "rules": [
+        {
+          "friction_key": "lights",
+          "level_id": "lamp_toward_desk",
+          "text": "看书开灯，不开全寝发布会。 使用台灯时，灯头朝向桌面，不朝向床铺。",
+          "execution_hint": "先关灯再挪位置；调好朝向再打开，不用现场解释光路。"
+        },
+        {
+          "friction_key": "visitors",
+          "level_id": "no_visitors_after_2200",
+          "text": "22:00 后，续聊请换场地。 22:00 后不接待室内访客，仍需交流时移到室外。",
+          "execution_hint": "到点一起移到室外，不用搬出任何室友当理由。"
+        },
+        {
+          "friction_key": "borrowing",
+          "level_id": "announce_return_time",
+          "text": "借的时候痛快，还的时间也说痛快。 借用物品时，在群里写明物品名称和归还时间。",
+          "execution_hint": "归还时间没定就先不借，不用承诺一个自己也不信的时间。"
+        },
+        {
+          "friction_key": "trash",
+          "level_id": "replace_full_bag",
+          "text": "垃圾到桶口，就别挑战叠叠乐。 垃圾达到桶口时，扎紧旧袋并带到垃圾收集点；有新袋就换上，无新袋则在群里报缺袋。",
+          "execution_hint": "没新袋就先扎紧旧袋带走，在群里发“需要垃圾袋”。"
+        },
+        {
+          "friction_key": "cleaning",
+          "level_id": "clear_sink_after_use",
+          "text": "冲水不能把饭粒变成不存在。 用完水槽后、离开水槽前，将可见固体残渣放入垃圾桶。",
+          "execution_hint": "用纸巾包起残渣丢进垃圾桶，不需要徒手挑战。"
+        }
+      ]
+    },
+    {
+      "id": "short_stay-3",
+      "is_example": true,
+      "space_type": "short_stay",
+      "space_label": "短租 / 民宿",
+      "duration": "三天",
+      "group_name": "三人旅行示例",
+      "participant_count": 3,
+      "rules": [
+        {
+          "friction_key": "borrowing",
+          "level_id": "return_after_use_5m",
+          "text": "用完就还，不自动续成长期持有。 借用物品使用结束后 5 分钟内，放回取用位置或当面交还。",
+          "execution_hint": "忘了原位就当面交还，不用补一篇物品旅行报告。"
+        },
+        {
+          "friction_key": "trash",
+          "level_id": "pack_before_leaving",
+          "text": "来过的证据，不用靠零食袋。 离开公共空间前，将本次产生的包装物放入垃圾桶。",
+          "execution_hint": "桶满就把包装封袋带到垃圾收集点，不用找谁来接班。"
+        },
+        {
+          "friction_key": "cleaning",
+          "level_id": "wipe_spill_2m",
+          "text": "打翻饮料，别等它自行蒸发。 在公共桌面打翻饮料后，2 分钟内擦掉可见积液。",
+          "execution_hint": "先拿纸巾吸水；不够就说“借点纸”，事故报告免写。"
+        },
+        {
+          "friction_key": "bathroom",
+          "level_id": "clear_drain_5m",
+          "text": "排水口，不留洗澡纪念品。 洗澡结束后 5 分钟内，将排水口可见头发放入垃圾桶。",
+          "execution_hint": "用纸巾包起可见头发丢进桶，5 分钟内完成，不用徒手捡。"
+        },
+        {
+          "friction_key": "food",
+          "level_id": "seal_open_food",
+          "text": "开封试吃，不附赠全柜同款气味。 食品开封取用后，放回存放区前夹好袋口或盖好盒盖。",
+          "execution_hint": "没封口夹就连包装放进带盖容器，盖好再放回。"
+        }
+      ]
+    },
+    {
+      "id": "club_room-1",
+      "is_example": true,
+      "space_type": "club_room",
+      "space_label": "社团活动室",
+      "duration": "一学期",
+      "group_name": "社团活动室示例",
+      "participant_count": 6,
+      "rules": [
+        {
+          "friction_key": "time_slots",
+          "level_id": "register_slot",
+          "text": "活动室不是谁先开门就归谁。 使用活动室前，在群里登记开始时间和结束时间。",
+          "execution_hint": "时间没定就先不占，确定起止时间后发群里即可。"
+        },
+        {
+          "friction_key": "shared_devices",
+          "level_id": "projector_off",
+          "text": "投完就关，不给空墙继续放映。 投影使用结束后，通过遥控器或菜单的关机功能关机；遥控器放回取用处，忘记位置则放在公共桌面并在群里报位置。",
+          "execution_hint": "不会关就请同伴指认遥控器或菜单的关机操作，不攀爬设备。"
+        },
+        {
+          "friction_key": "shared_desks",
+          "level_id": "clear_desk_5m",
+          "text": "公共桌面，不支持永久圈地。 结束使用公共桌面后 5 分钟内，收走本次放置的个人物品。",
+          "execution_hint": "来不及分类就先一并装包，5 分钟内腾出桌面，回头再整理。"
+        },
+        {
+          "friction_key": "reset_room",
+          "level_id": "return_materials_10m",
+          "text": "下一场的准备，不该从找东西开始。 活动结束后 10 分钟内，将共享材料放回取用位置；忘记位置则集中放到公共桌面一角并在群里报位置。",
+          "execution_hint": "忘了原位就集中放桌角，群里报“材料在桌角”，10 分钟内完成。"
+        },
+        {
+          "friction_key": "departure",
+          "level_id": "lights_and_ac_off",
+          "text": "全员离场，不保留无人豪华包间。 最后一个人离开空间时，关闭室内照明和空调。",
+          "execution_hint": "不会操作就请同伴指认开关，确认照明和空调关闭再走。"
+        }
+      ]
+    },
+    {
+      "id": "club_room-2",
+      "is_example": true,
+      "space_type": "club_room",
+      "space_label": "社团活动室",
+      "duration": "一学期",
+      "group_name": "社团活动室示例",
+      "participant_count": 6,
+      "rules": [
+        {
+          "friction_key": "visitors",
+          "level_id": "no_visitors_after_2200",
+          "text": "聊天还没尽兴，不等于房间续费。 22:00 后不接待室内访客，仍需交流时移到室外。",
+          "execution_hint": "到点一起移到室外，不用搬出任何室友当理由。"
+        },
+        {
+          "friction_key": "borrowing",
+          "level_id": "announce_return_time",
+          "text": "借用不是永久会员体验。 借用物品时，在群里写明物品名称和归还时间。",
+          "execution_hint": "归还时间没定就先不借，不用承诺一个自己也不信的时间。"
+        },
+        {
+          "friction_key": "trash",
+          "level_id": "replace_full_bag",
+          "text": "桶满不是压缩算法测试题。 垃圾达到桶口时，扎紧旧袋并带到垃圾收集点；有新袋就换上，无新袋则在群里报缺袋。",
+          "execution_hint": "没新袋就先扎紧旧袋带走，在群里发“需要垃圾袋”。"
+        },
+        {
+          "friction_key": "cleaning",
+          "level_id": "clear_sink_after_use",
+          "text": "水槽不是厨余直达通道。 用完水槽后、离开水槽前，将可见固体残渣放入垃圾桶。",
+          "execution_hint": "用纸巾包起残渣丢进垃圾桶，不需要徒手挑战。"
+        },
+        {
+          "friction_key": "food",
+          "level_id": "label_fridge_date",
+          "text": "放进冰箱，请附一条时间线索。 食品放进公共冰箱前，在包装或随附纸条上标注放入日期。",
+          "execution_hint": "写日期的小纸条与食品一起装袋，不用制作正式标签。"
+        }
+      ]
+    },
+    {
+      "id": "club_room-3",
+      "is_example": true,
+      "space_type": "club_room",
+      "space_label": "社团活动室",
+      "duration": "一学期",
+      "group_name": "社团活动室示例",
+      "participant_count": 6,
+      "rules": [
+        {
+          "friction_key": "trash",
+          "level_id": "pack_before_leaving",
+          "text": "人离场，包装不留彩蛋。 离开公共空间前，将本次产生的包装物放入垃圾桶。",
+          "execution_hint": "桶满就把包装封袋带到垃圾收集点，不用找谁来接班。"
+        },
+        {
+          "friction_key": "cleaning",
+          "level_id": "wipe_spill_2m",
+          "text": "饮料洒了，不开桌面水景项目。 在公共桌面打翻饮料后，2 分钟内擦掉可见积液。",
+          "execution_hint": "先拿纸巾吸水；不够就说“借点纸”，事故报告免写。"
+        },
+        {
+          "friction_key": "food",
+          "level_id": "seal_open_food",
+          "text": "开封试吃，不附赠全柜同款气味。 食品开封取用后，放回存放区前夹好袋口或盖好盒盖。",
+          "execution_hint": "没封口夹就连包装放进带盖容器，盖好再放回。"
+        },
+        {
+          "friction_key": "shared_devices",
+          "level_id": "reserve_device_window",
+          "text": "设备使用权，不是先到永久得。 使用共享设备前，在群里写明设备名称、开始时间和结束时间。",
+          "execution_hint": "时间未定就先不占设备，定好再写名称和起止时间。"
+        },
+        {
+          "friction_key": "air_conditioning",
+          "level_id": "temperature_step_2c_15m",
+          "text": "调温别连招，给体感一点延迟。 每次调温不超过 2℃，两次调温间隔至少 15 分钟。",
+          "execution_hint": "还想调就设 15 分钟计时，到点再调，每次仍不超过 2℃。"
+        }
+      ]
+    }
+  ]
+}
